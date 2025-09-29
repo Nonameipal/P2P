@@ -1,0 +1,41 @@
+definitions:
+  controller.CommonError:
+    properties:
+      error:
+        type: string
+    type: object
+  controller.CommonResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: firdavs022006@gmail.com
+    name: API P2P marketplace
+    url: https://test.com/
+  title: P2P marketplace service
+paths:
+  /ping:
+    get:
+      description: Роут проверки сервиса
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.CommonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.CommonError'
+      summary: Healthcheck
+      tags:
+      - Ping
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
