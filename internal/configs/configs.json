@@ -7,12 +7,12 @@
     "gin_mode": "debug",
     "port_run": "7777",
     "server_url": "localhost",
-    "server_name": "eBlog Service"
+    "server_name": "P2P_Marketplace"
   },
   "postgres_params": {
     "host": "localhost",
     "port": "5432",
     "user": "postgres",
-    "database": "eblog"
+    "database": "HomeWork.16"
   }
 }

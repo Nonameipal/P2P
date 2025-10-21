@@ -20,7 +20,7 @@ func NewRepository(db *sqlx.DB) *Repository {
 func (r *Repository) translateError(err error) error {
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
-		return errs.ErrNotFound
+		return errs.ErrNotfound
 	default:
 		return err
 	}
