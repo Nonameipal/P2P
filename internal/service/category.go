@@ -1,6 +1,8 @@
 package service
 
-import "github.com/Nonameipal/P2P/internal/models/domain"
+import (
+	"github.com/Nonameipal/P2P/internal/models/domain"
+)
 
 func (s *Service) CreateCategory(category domain.Category) error {
 	return s.repository.CreateCategory(category)
@@ -20,4 +22,8 @@ func (s *Service) UpdateCategory(category domain.Category) error {
 
 func (s *Service) DeleteCategory(id int) error {
 	return s.repository.DeleteCategory(id)
+}
+
+func (s *Service) GetCategoryByName(name string) (domain.Category, error) {
+	return s.repository.GetCategoryByName(name)
 }

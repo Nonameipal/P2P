@@ -3,16 +3,14 @@ package domain
 import "time"
 
 type User struct {
-	ID           int
-	FullName     string
-	Username     string
-	Password     string
-	Email        string
-	Phone        string
-	Role         string
-	IsIdentified bool
-	CreatedAt    *time.Time
-	UpdatedAt    *time.Time
+	ID        int
+	FullName  string
+	Username  string
+	Password  string
+	Phone     string
+	Role      string
+	CreatedAt *time.Time
+	UpdatedAt *time.Time
 }
 
 var (

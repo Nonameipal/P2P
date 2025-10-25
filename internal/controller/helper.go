@@ -2,10 +2,11 @@ package controller
 
 import (
 	"errors"
+	"strings"
+
 	"github.com/Nonameipal/P2P/internal/configs"
 	"github.com/Nonameipal/P2P/pkg"
 	"github.com/gin-gonic/gin"
-	"strings"
 )
 
 func (ctrl *Controller) extractTokenFromHeader(c *gin.Context, headerKey string) (string, error) {

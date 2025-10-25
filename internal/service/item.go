@@ -9,13 +9,13 @@ func (s *Service) CreateItem(item domain.Item) (err error) {
 func (s *Service) UpdateItemByID(item domain.Item) (err error) {
 	return s.repository.UpdateItemByID(item)
 }
-func (s *Service) DeleteItemByID(id string, ownerID string) (err error) {
+func (s *Service) DeleteItemByID(id int, ownerID string) (err error) {
 	return s.repository.DeleteItemByID(id, ownerID)
 }
 func (s *Service) GetAllItems() ([]domain.Item, error) {
 	return s.repository.GetAllItems()
 }
-func (s *Service) GetItemByID(id string) (domain.Item, error) {
+func (s *Service) GetItemByID(id int) (domain.Item, error) {
 	return s.repository.GetItemByID(id)
 }
 

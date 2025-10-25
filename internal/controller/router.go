@@ -38,10 +38,18 @@ func (ctrl *Controller) InitRoutes() error {
 	// Маршруты для авторизованных пользователей
 	apiV1G := r.Group("/api/v1", ctrl.checkUserAuthentication)
 	{
+		// Маршруты для предметов
 		apiV1G.POST("/items", ctrl.CreateItem)
 		apiV1G.PUT("/items/:id", ctrl.UpdateItem)
 		apiV1G.DELETE("/items/:id", ctrl.DeleteItem)
 		apiV1G.GET("/my-items", ctrl.GetMyItems)
+
+		// Маршруты для бронирований
+		apiV1G.POST("/bookings", ctrl.CreateBooking)
+		apiV1G.GET("/bookings/my", ctrl.GetMyBookings)
+		apiV1G.GET("/items/:id/bookings", ctrl.GetItemBookings)
+		apiV1G.GET("/items/:id/availability", ctrl.CheckItemAvailability)
+		apiV1G.PUT("/bookings/:id/status", ctrl.UpdateBookingStatus)
 	}
 
 	// Админские маршруты
@@ -52,7 +60,7 @@ func (ctrl *Controller) InitRoutes() error {
 		adminG.PUT("/categories/:id", ctrl.UpdateCategory)
 		adminG.DELETE("/categories/:id", ctrl.DeleteCategory)
 
-}
+	}
 	err := r.Run(fmt.Sprintf(":%s", configs.AppSettings.AppParams.PortRun))
 	if err != nil {
 		return err

@@ -14,4 +14,8 @@ var (
 	ErrIncorrectUsernameOrPassword = errors.New("incorrect username or password")
 	ErrInvalidToken                = errors.New("invalid token")
 	ErrSomethingWentWrong          = errors.New("something went wrong")
+	ErrItemNotAvailable   = errors.New("item is not available for selected dates")
+	ErrInvalidStatus      = errors.New("invalid booking status")
+	ErrInvalidDateRange   = errors.New("end date must be after start date")
+	ErrPastDate          = errors.New("cannot book dates in the past")
 )

@@ -91,3 +91,18 @@ func (r *Repository) DeleteCategory(id int) error {
 
 	return nil
 }
+
+func (r *Repository) GetCategoryByName(name string) (domain.Category, error) {
+	logger := zerolog.New(os.Stdout).With().Timestamp().Str("func_name", "repository.GetCategoryByName").Logger()
+
+	var dbCategory dbModels.Category
+	if err := r.db.Get(&dbCategory, `
+		SELECT id, name, description, created_at, updated_at
+		FROM categories
+		WHERE name = $1`, name); err != nil {
+		logger.Err(err).Msg("error selecting category by name")
+		return domain.Category{}, r.translateError(err)
+	}
+
+	return dbCategory.ToDomain(), nil
+}

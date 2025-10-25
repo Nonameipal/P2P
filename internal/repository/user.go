@@ -10,14 +10,13 @@ import (
 
 func (r *Repository) CreateUser(user domain.User) (err error) {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Str("func_name", "repository.CreateUser").Logger()
-	_, err = r.db.Exec(`INSERT INTO users (full_name, username, password, email, phone, role)
-					VALUES ($1, $2, $3, $4, $5, $6)`,
+	_, err = r.db.Exec(`INSERT INTO users (full_name, username, password, role, phone)
+					VALUES ($1, $2, $3, $4, $5)`,
 		user.FullName,
 		user.Username,
 		user.Password,
-		user.Email,
-		user.Phone,
 		user.Role,
+		user.Phone,
 	)
 	if err != nil {
 		logger.Err(err).Msg("error inserting user")
@@ -27,11 +26,11 @@ func (r *Repository) CreateUser(user domain.User) (err error) {
 	return nil
 }
 
-func (r *Repository) GetUserByID(id int) (domain.User, error) {
+func (r *Repository) GetUserByID(id string) (domain.User, error) {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Str("func_name", "repository.GetUserByID").Logger()
 	var dbUser dbModels.User
 	if err := r.db.Get(&dbUser, `
-		SELECT id, full_name, username, password, role, created_at, updated_at 
+		SELECT id, full_name, username, password, role, created_at, updated_at , phone
 		FROM users
 		WHERE id = $1`, id); err != nil {
 		logger.Err(err).Msg("error selecting user")
@@ -46,7 +45,7 @@ func (r *Repository) GetUserByUsername(username string) (domain.User, error) {
 
 	var dbUser dbModels.User
 	if err := r.db.Get(&dbUser, `
-		SELECT id, full_name, username, password, created_at, updated_at 
+		SELECT id, full_name, username, password, role, created_at, updated_at, phone
 		FROM users
 		WHERE username = $1`, username); err != nil {
 		logger.Err(err).Msg("error selecting user")

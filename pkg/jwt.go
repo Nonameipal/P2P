@@ -15,7 +15,7 @@ type CustomClaims struct {
 	IsRefresh bool   `json:"is_refresh"`
 }
 
-func GenerateToken(userID, ttl int, Role string, isRefresh bool) (string, error) {
+func GenerateToken(userID int, ttl int, Role string, isRefresh bool) (string, error) {
 	claims := CustomClaims{
 		StandardClaims: jwt.StandardClaims{},
 		UserID:         userID,

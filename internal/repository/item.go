@@ -14,15 +14,16 @@ func (r *Repository) CreateItem(item domain.Item) error {
 	dbItem := dbModels.Item{}
 	dbItem.FromDomain(item)
 
-	_, err := r.db.Exec(`INSERT INTO items (id, owner_id, category_id, title, description, price_per_day, status)
-					VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-		dbItem.ID,
+	_, err := r.db.Exec(`INSERT INTO items (owner_id, category_id, title, description, price_per_day, status, available_from, available_to)
+					VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
 		dbItem.OwnerID,
 		dbItem.CategoryID,
 		dbItem.Title,
 		dbItem.Description,
 		dbItem.PricePerDay,
 		dbItem.Status,
+		dbItem.AvailableFrom,
+		dbItem.AvailableTo,
 	)
 	if err != nil {
 		logger.Err(err).Msg("error inserting item")
@@ -81,7 +82,7 @@ func (r *Repository) GetAllItems() (items []domain.Item, err error) {
 	return items, nil
 }
 
-func (r *Repository) GetItemByID(id string) (item domain.Item, err error) {
+func (r *Repository) GetItemByID(id int) (item domain.Item, err error) {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Str("func_name", "repository.GetItemByID").Logger()
 
 	var dbItem dbModels.Item
@@ -96,7 +97,7 @@ func (r *Repository) GetItemByID(id string) (item domain.Item, err error) {
 	return dbItem.ToDomain(), nil
 }
 
-func (r *Repository) DeleteItemByID(id string, ownerID string) (err error) {
+func (r *Repository) DeleteItemByID(id int, ownerID string) (err error) {
 	logger := zerolog.New(os.Stdout).With().Timestamp().Str("func_name", "repository.DeleteItemByID").Logger()
 
 	_, err = r.db.Exec(`DELETE FROM items WHERE id = $1 AND owner_id = $2`, id, ownerID)
